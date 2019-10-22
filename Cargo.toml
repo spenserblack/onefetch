@@ -15,6 +15,8 @@ tokei = "10.0"
 license = "0.7.1"
 bytecount = "0.5.1"
 clap = "2.33.0"
+repng = "0.2.2"
+scrap = "0.5.0"
 strum = "0.16.0"
 strum_macros = "0.16.0"
 

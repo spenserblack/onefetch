@@ -2,6 +2,8 @@ extern crate bytecount;
 extern crate colored;
 extern crate git2;
 extern crate license;
+extern crate repng;
+extern crate scrap;
 extern crate tokei;
 #[macro_use]
 extern crate clap;
@@ -27,6 +29,7 @@ mod commit_info;
 mod error;
 mod info;
 mod language;
+mod screencap;
 
 use ascii_art::AsciiArt;
 use commit_info::CommitInfo;
@@ -153,6 +156,12 @@ Possible values: [{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}]",
                     "15".bright_white(),
                 )),
         )
+        .arg(
+            Arg::with_name("screenshot")
+                .short("S")
+                .long("screenshot")
+                .help("Fetches a screenshot after displaying repo summary")
+        )
         .get_matches();
     let dir = String::from(matches.value_of("directory").unwrap());
     let custom_logo: Language =
@@ -196,6 +205,13 @@ Possible values: [{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}]",
     let info = Info::new(&dir, custom_logo, custom_colors, disable_fields)?;
 
     print!("{}", info);
+
+    if matches.is_present("screenshot") {
+        if let Err(_) = screencap::take_screencaps() {
+            return Err(Error::ScreenshotFailed);
+        }
+    }
+
     Ok(())
 }
 

@@ -12,6 +12,8 @@ pub enum Error {
     NotGitRepo,
     /// Error while getting branch info
     ReferenceInfoError,
+    /// Failed to take screenshot
+    ScreenshotFailed,
 }
 
 impl std::fmt::Debug for Error {
@@ -23,6 +25,7 @@ impl std::fmt::Debug for Error {
             Error::ReadDirectory => "Could not read directory",
             Error::NotGitRepo => "This is not a Git Repo",
             Error::ReferenceInfoError => "Error while retrieving reference information",
+            Error::ScreenshotFailed => "Failed to take a screenshot",
         };
         write!(f, "{}", content)
     }
